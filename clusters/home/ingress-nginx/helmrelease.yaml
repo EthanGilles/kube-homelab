@@ -15,3 +15,5 @@ spec:
         namespace: flux-system
   interval: 10m
   values:
+    controller:
+      kind: DaemonSet

@@ -37,9 +37,9 @@ spec:
     - Ingress
   ingress:
     - from:
-      - podSelector:
+      - namespaceSelector:
           matchLabels:
-            app.kubernetes.io/name: ingress-nginx
+            nginx: "enabled"
   podSelector:
     matchLabels:
       app.kubernetes.io/instance: capacitor

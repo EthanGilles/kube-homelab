@@ -14,7 +14,7 @@ spec:
         name: nginx-ingress
         namespace: flux-system
   timeout: 2m
-  interval: 10m
+  interval: 30m
   values:
     controller:
       kind: DaemonSet

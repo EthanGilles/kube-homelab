@@ -17,3 +17,4 @@ spec:
   values:
     controller:
       kind: DaemonSet
+      hostNetwork: true

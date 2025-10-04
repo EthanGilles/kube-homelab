@@ -36,10 +36,7 @@ spec:
   policyTypes:
     - Ingress
   ingress:
-    - from:
-      - namespaceSelector:
-          matchLabels:
-            nginx: "enabled"
+    - {}
   podSelector:
     matchLabels:
       app.kubernetes.io/instance: capacitor

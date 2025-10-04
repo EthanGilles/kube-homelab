@@ -13,8 +13,11 @@ spec:
         kind: HelmRepository
         name: nginx-ingress
         namespace: flux-system
+  timeout: 2m
   interval: 10m
   values:
     controller:
       kind: DaemonSet
       hostNetwork: true
+      service:
+        type: ClusterIP

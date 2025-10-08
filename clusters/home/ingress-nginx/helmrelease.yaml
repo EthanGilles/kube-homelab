@@ -13,8 +13,8 @@ spec:
         kind: HelmRepository
         name: nginx-ingress
         namespace: flux-system
-  timeout: 2m
   interval: 30m
+  timeout: 2m
   values:
     controller:
       kind: DaemonSet

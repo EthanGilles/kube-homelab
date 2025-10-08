@@ -15,8 +15,6 @@ spec:
         namespace: flux-system
   interval: 30m
   timeout: 2m
-  dependsOn:
-    - name: cert-manager
   values:
     controller:
       kind: DaemonSet

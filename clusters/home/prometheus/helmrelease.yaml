@@ -14,8 +14,6 @@ spec:
         kind: HelmRepository
         name: prometheus-community
         namespace: flux-system
-  dependsOn:
-    - name: nginx-ingress
   valuesFrom:
   - kind: ConfigMap
     name: flux-kube-state-metrics-config

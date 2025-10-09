@@ -68,7 +68,7 @@ spec:
         configs:
           - from: "2024-04-01"
             store: tsdb
-            object_store: filesystem
+            object_store: s3
             schema: v13
             index:
               prefix: loki_index_
@@ -78,7 +78,7 @@ spec:
       ruler:
         enable_api: true
     minio:
-      enabled: false
+      enabled: true
     lokiCanary:
       enabled: false
     deploymentMode: SingleBinary

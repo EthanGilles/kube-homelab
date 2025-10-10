@@ -1,0 +1,59 @@
+{
+  "extends": [
+    "config:recommended",
+    ":semanticCommits",
+    ":semanticCommitTypeAll(chore)",
+    ":semanticCommitScopeDisabled"
+  ],
+  "commitMessagePrefix": "[update]",
+  "commitMessageAction": " chore: ",
+  "packageRules": [
+    {
+      "matchDatasources": ["helm"],
+      "matchPackageNames": ["longhorn"],
+      "registryUrls": ["https://charts.longhorn.io"]
+    },
+    {
+      "matchDatasources": ["helm"],
+      "matchPackageNames": ["kube-prometheus-stack"],
+      "registryUrls": ["https://prometheus-community.github.io/helm-charts"]
+    },
+    {
+      "matchDatasources": ["helm"],
+      "matchPackageNames": ["cert-manager"],
+      "registryUrls": ["https://charts.jetstack.io"]
+    },
+    {
+      "matchDatasources": ["helm"],
+      "matchPackageNames": ["promtail", "loki"],
+      "registryUrls": ["https://grafana.github.io/helm-charts"]
+    },
+    {
+      "matchDatasources": ["helm"],
+      "matchPackageNames": ["ingress-nginx"],
+      "registryUrls": ["https://kubernetes.github.io/ingress-nginx"]
+    }
+  ],
+  "customManagers": [
+    {
+      "customType": "regex",
+      "managerFilePatterns": [
+        "/^clusters/home/.*/.*release\\.ya?ml$/"
+      ],
+      "matchStrings": [
+        "chart:\\s*\\n\\s*spec:\\s*\\n\\s*chart:\\s*(?<depName>[a-zA-Z0-9-_.]+)\\s*\\n\\s*version:\\s*\"?(?<currentValue>\\d+\\.\\d+\\.\\d+)\"?"
+      ],
+      "datasourceTemplate": "helm"
+    },
+    {
+      "customType": "regex",
+      "managerFilePatterns": [
+        "/^clusters/.*/gotk-components\\.ya?ml$/"
+      ],
+      "matchStrings": [
+        "image:\\s*ghcr\\.io/fluxcd/(?<depName>[a-z-]+):(?<currentValue>[0-9]+\\.[0-9]+\\.[0-9]+)"
+      ],
+      "datasourceTemplate": "docker"
+    }
+  ]
+}

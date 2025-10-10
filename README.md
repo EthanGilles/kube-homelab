@@ -31,7 +31,7 @@ update to newer versions automatically, keeping the cluster secure
 and up-to-date with barely any manual effort.
 
 ---
-## Current Appications
+## Currently Deployed:
 
 ### GitOps: 
 - [Flux2](https://github.com/fluxcd/flux2)
@@ -47,7 +47,7 @@ and up-to-date with barely any manual effort.
 - [Grafana](https://github.com/grafana/helm-charts)
 
 ### Apps:
-
+- [Capacitor](https://github.com/gimlet-io/capacitor)
 
 ---
 

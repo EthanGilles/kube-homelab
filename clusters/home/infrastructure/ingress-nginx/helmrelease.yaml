@@ -27,9 +27,9 @@ spec:
           annotations:
             prometheus.io/scrape: "true"
             prometheus.io/port: "10254"
-        # serviceMonitor:
-        #   enabled: true
-        #   additionalLabels:
-        #     release: kube-prometheus-stack
-        # port: 10254
-        # portName: metrics
+        serviceMonitor:
+          enabled: true
+          additionalLabels:
+            release: kube-prometheus-stack
+        port: 10254
+        portName: metrics

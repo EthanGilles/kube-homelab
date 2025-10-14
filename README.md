@@ -34,7 +34,7 @@ and up-to-date with barely any manual effort.
 ## Currently Deployed:
 
 ### GitOps: 
-- [Flux2](https://github.com/fluxcd/flux2)
+- [FluxCD](https://github.com/fluxcd/flux2)
 
 ### Infrastructure
 - [Cert-Manager](https://github.com/cert-manager/cert-manager)

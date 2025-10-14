@@ -1,25 +1,25 @@
-apiVersion: helm.toolkit.fluxcd.io/v2
-kind: HelmRelease
-metadata:
-  name: promtail
-  namespace: monitoring
-spec:
-  interval: 1h
-  dependsOn:
-    - name: kube-prometheus-stack
-  chart:
-    spec:
-      chart: promtail
-      version: 6.17.0
-      reconcileStrategy: ChartVersion
-      sourceRef:
-        kind: HelmRepository
-        name: grafana-repo
-        namespace: flux-system
-  values:
-    # https://grafana.com/docs/loki/latest/send-data/promtail/installation/
-    config:
-    # publish data to loki
-      clients:
-        - url: http://loki-gateway/loki/api/v1/push
-          tenant_id: 1
+# apiVersion: helm.toolkit.fluxcd.io/v2
+# kind: HelmRelease
+# metadata:
+#   name: promtail
+#   namespace: monitoring
+# spec:
+#   interval: 1h
+#   dependsOn:
+#     - name: kube-prometheus-stack
+#   chart:
+#     spec:
+#       chart: promtail
+#       version: 6.17.0
+#       reconcileStrategy: ChartVersion
+#       sourceRef:
+#         kind: HelmRepository
+#         name: grafana-repo
+#         namespace: flux-system
+#   values:
+#     # https://grafana.com/docs/loki/latest/send-data/promtail/installation/
+#     config:
+#     # publish data to loki
+#       clients:
+#         - url: http://loki-gateway/loki/api/v1/push
+#           tenant_id: 1

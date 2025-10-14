@@ -17,7 +17,8 @@ spec:
         - name: ghcr-pull-secret
       containers:
         - name: backend
-          image: ghcr.io/ethangilles/job-watch-backend:dev   # or :main
+          image: ghcr.io/ethangilles/job-watch-backend:dev
+          imagePullPolicy: Always
           ports:
             - containerPort: 8000
           envFrom:

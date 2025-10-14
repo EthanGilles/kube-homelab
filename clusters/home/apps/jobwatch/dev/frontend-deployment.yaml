@@ -18,6 +18,7 @@ spec:
       containers:
         - name: frontend
           image: ghcr.io/ethangilles/job-watch-frontend:dev
+          imagePullPolicy: Always
           ports:
             - containerPort: 80
 ---

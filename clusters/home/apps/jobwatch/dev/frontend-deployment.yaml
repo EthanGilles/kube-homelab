@@ -21,6 +21,11 @@ spec:
           imagePullPolicy: Always
           ports:
             - containerPort: 80
+          env:
+            - name: API_URL
+              value: "https://api.jobwatch.dev.homelab"
+            - name: ENVIRONMENT
+              value: "development"
 ---
 apiVersion: v1
 kind: Service

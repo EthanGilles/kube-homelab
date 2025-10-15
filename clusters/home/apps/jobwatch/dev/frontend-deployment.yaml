@@ -22,6 +22,8 @@ spec:
             - /bin/sh
             - -c
             - |
+              apt-get update && apt-get install -y ca-certificates
+              mkdir -p /usr/local/share/ca-certificates
               cp /homelab-ca/homelab-ca.crt /usr/local/share/ca-certificates/homelab-ca.crt
               update-ca-certificates
           volumeMounts:

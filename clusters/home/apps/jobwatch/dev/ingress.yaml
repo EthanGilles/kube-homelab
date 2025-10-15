@@ -1,13 +1,13 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: jobwatch-ingress
+  name: jobwatch-backend-ingress
   namespace: jobwatch-dev
   annotations:
     kubernetes.io/ingress.class: nginx
     cert-manager.io/cluster-issuer: homelab-ca-issuer
-    nginx.ingress.kubernetes.io/rewrite-target: /$2
     nginx.ingress.kubernetes.io/use-regex: "true"
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
 spec:
   tls:
     - hosts:
@@ -17,7 +17,6 @@ spec:
     - host: jobwatch.dev.homelab
       http:
         paths:
-          # Backend API
           - path: /api(/|$)(.*)
             pathType: ImplementationSpecific
             backend:
@@ -25,8 +24,24 @@ spec:
                 name: backend-service
                 port:
                   number: 8000
-
-          # Frontend React App (catch-all)
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: jobwatch-frontend-ingress
+  namespace: jobwatch-dev
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    cert-manager.io/cluster-issuer: homelab-ca-issuer
+spec:
+  tls:
+    - hosts:
+        - jobwatch.dev.homelab
+      secretName: wildcard-homelab-tls
+  rules:
+    - host: jobwatch.dev.homelab
+      http:
+        paths:
           - path: /(.*)
             pathType: ImplementationSpecific
             backend:
@@ -34,4 +49,3 @@ spec:
                 name: frontend-service
                 port:
                   number: 80
-

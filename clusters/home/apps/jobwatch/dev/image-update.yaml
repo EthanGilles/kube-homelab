@@ -5,6 +5,10 @@ metadata:
   namespace: flux-system
 spec:
   interval: 1m
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+    namespace: flux-system
   git:
     checkout:
       ref:
@@ -18,3 +22,4 @@ spec:
       branch: main
   update:
     path: ./apps/jobwatch/dev
+

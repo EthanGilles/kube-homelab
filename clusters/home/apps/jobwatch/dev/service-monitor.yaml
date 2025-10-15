@@ -14,8 +14,6 @@ spec:
     matchNames:
       - jobwatch-dev
   endpoints:
-    - port: 8000
+    - port: http
       interval: 30s
-      scheme: https
-      tlsConfig:
-        insecureSkipVerify: true
+      scheme: http

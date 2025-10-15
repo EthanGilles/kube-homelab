@@ -7,7 +7,6 @@ metadata:
     kubernetes.io/ingress.class: nginx
     cert-manager.io/cluster-issuer: homelab-ca-issuer
     nginx.ingress.kubernetes.io/use-regex: "true"
-    # Only rewrite /api/*, not frontend
     nginx.ingress.kubernetes.io/rewrite-target: /$2
 spec:
   tls:
@@ -18,8 +17,8 @@ spec:
     - host: jobwatch.dev.homelab
       http:
         paths:
-          # Backend API with rewrite
-          - path: ^/api(/|$)(.*)
+          # Backend API (rewrite)
+          - path: /api(/|$)(.*)
             pathType: ImplementationSpecific
             backend:
               service:
@@ -27,7 +26,7 @@ spec:
                 port:
                   number: 8000
 
-          # Frontend React app (catch-all, no rewrite)
+          # Frontend catch-all (no rewrite)
           - path: /(.*)
             pathType: ImplementationSpecific
             backend:

@@ -33,6 +33,7 @@ metadata:
   annotations:
     kubernetes.io/ingress.class: nginx
     cert-manager.io/cluster-issuer: homelab-ca-issuer
+    nginx.ingress.kubernetes.io/rewrite-target: ""  # disables rewriting
 spec:
   tls:
     - hosts:

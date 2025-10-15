@@ -26,6 +26,10 @@ spec:
               value: "https://api.jobwatch.dev.homelab"
             - name: ENVIRONMENT
               value: "development"
+      hostAliases:
+      - ip: "10.0.0.103"
+        hostnames:
+          - "api.jobwatch.dev.homelab"
 ---
 apiVersion: v1
 kind: Service

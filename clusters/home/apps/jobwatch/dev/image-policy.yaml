@@ -7,8 +7,8 @@ spec:
   imageRepositoryRef:
     name: jobwatch-backend
   policy:
-    filterTags:
-      pattern: ^dev$
+    alphabetical:
+      order: ascending
 ---
 apiVersion: image.toolkit.fluxcd.io/v1beta2
 kind: ImagePolicy
@@ -19,5 +19,5 @@ spec:
   imageRepositoryRef:
     name: jobwatch-frontend
   policy:
-    filterTags:
-      pattern: ^dev$
+    alphabetical:
+      order: ascending

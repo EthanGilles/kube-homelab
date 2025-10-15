@@ -1,0 +1,17 @@
+apiVersion: image.toolkit.fluxcd.io/v1beta2
+kind: ImageRepository
+metadata:
+  name: jobwatch-backend
+  namespace: flux-system
+spec:
+  image: ghcr.io/ethangilles/job-watch-backend
+  interval: 10m
+---
+apiVersion: image.toolkit.fluxcd.io/v1beta2
+kind: ImageRepository
+metadata:
+  name: jobwatch-frontend
+  namespace: flux-system
+spec:
+  image: ghcr.io/ethangilles/job-watch-frontend
+  interval: 10m

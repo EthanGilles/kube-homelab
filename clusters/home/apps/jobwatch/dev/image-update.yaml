@@ -1,0 +1,19 @@
+apiVersion: image.toolkit.fluxcd.io/v1beta2
+kind: ImageUpdateAutomation
+metadata:
+  name: jobwatch
+  namespace: flux-system
+spec:
+  interval: 1m
+  git:
+    checkout:
+      ref:
+        branch: main
+    commit:
+      authorName: flux
+      authorEmail: flux@example.com
+      messageTemplate: 'Update JobWatch images to {{ .NewTag }}'
+    push:
+      branch: main
+  update:
+    path: ./apps/jobwatch/dev

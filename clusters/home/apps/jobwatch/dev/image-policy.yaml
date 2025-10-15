@@ -7,8 +7,7 @@ spec:
   imageRepositoryRef:
     name: jobwatch-backend
   policy:
-    extract:
-      regex: "dev"
+    alphabetical: {}
 ---
 apiVersion: image.toolkit.fluxcd.io/v1beta2
 kind: ImagePolicy
@@ -19,5 +18,4 @@ spec:
   imageRepositoryRef:
     name: jobwatch-frontend
   policy:
-    extract:
-      regex: "dev"
+    alphabetical: {}

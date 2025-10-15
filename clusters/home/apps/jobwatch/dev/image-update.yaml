@@ -10,7 +10,7 @@ spec:
       ref:
         branch: main
     commit:
-      authorEmail: Flux flux[image update bot]@github.com
+      author: Flux flux[image update bot]@github.com
       messageTemplate: 'Update JobWatch images to {{ .NewTag }}'
     push:
       branch: main

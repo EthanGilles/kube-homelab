@@ -27,4 +27,4 @@ spec:
         enabled: true
         interval: 30s
         labels:
-          release: kube-prometheus-stack-prometheus
+          release: kube-prometheus-stack

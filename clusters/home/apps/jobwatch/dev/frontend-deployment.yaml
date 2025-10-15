@@ -15,21 +15,6 @@ spec:
     spec:
       imagePullSecrets:
         - name: ghcr-pull-secret
-      initContainers:
-        - name: update-ca-certificates
-          image: debian:bullseye-slim
-          command:
-            - /bin/sh
-            - -c
-            - |
-              apt-get update && apt-get install -y ca-certificates
-              mkdir -p /usr/local/share/ca-certificates
-              cp /homelab-ca/homelab-ca.crt /usr/local/share/ca-certificates/homelab-ca.crt
-              update-ca-certificates
-          volumeMounts:
-            - name: homelab-ca
-              mountPath: /homelab-ca
-              readOnly: true
       containers:
         - name: frontend
           image: ghcr.io/ethangilles/job-watch-frontend:dev
@@ -41,19 +26,10 @@ spec:
               value: "https://api.jobwatch.dev.homelab"
             - name: ENVIRONMENT
               value: "development"
-          volumeMounts:
-            - name: homelab-ca
-              mountPath: /usr/local/share/ca-certificates/homelab-ca.crt
-              subPath: homelab-ca.crt
-              readOnly: true
       hostAliases:
         - ip: "10.0.0.103"
           hostnames:
             - "api.jobwatch.dev.homelab"
-      volumes:
-        - name: homelab-ca
-          configMap:
-            name: homelab-ca
 ---
 apiVersion: v1
 kind: Service

@@ -1,12 +1,13 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: jobwatch-backend-ingress
+  name: jobwatch-ingress
   namespace: jobwatch-dev
   annotations:
     kubernetes.io/ingress.class: nginx
     cert-manager.io/cluster-issuer: homelab-ca-issuer
     nginx.ingress.kubernetes.io/use-regex: "true"
+    # Only rewrite /api/*, not frontend
     nginx.ingress.kubernetes.io/rewrite-target: /$2
 spec:
   tls:
@@ -17,32 +18,16 @@ spec:
     - host: jobwatch.dev.homelab
       http:
         paths:
-          - path: /api(/|$)(.*)
+          # Backend API with rewrite
+          - path: ^/api(/|$)(.*)
             pathType: ImplementationSpecific
             backend:
               service:
                 name: backend-service
                 port:
                   number: 8000
----
-apiVersion: networking.k8s.io/v1
-kind: Ingress
-metadata:
-  name: jobwatch-frontend-ingress
-  namespace: jobwatch-dev
-  annotations:
-    kubernetes.io/ingress.class: nginx
-    cert-manager.io/cluster-issuer: homelab-ca-issuer
-    nginx.ingress.kubernetes.io/rewrite-target: ""  # disables rewriting
-spec:
-  tls:
-    - hosts:
-        - jobwatch.dev.homelab
-      secretName: wildcard-homelab-tls
-  rules:
-    - host: jobwatch.dev.homelab
-      http:
-        paths:
+
+          # Frontend React app (catch-all, no rewrite)
           - path: /(.*)
             pathType: ImplementationSpecific
             backend:
@@ -50,3 +35,4 @@ spec:
                 name: frontend-service
                 port:
                   number: 80
+

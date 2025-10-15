@@ -6,7 +6,8 @@ metadata:
   annotations:
     kubernetes.io/ingress.class: nginx
     cert-manager.io/cluster-issuer: homelab-ca-issuer
-    nginx.ingress.kubernetes.io/rewrite-target: /$2
+    nginx.ingress.kubernetes.io/rewrite-target: /$1
+    nginx.ingress.kubernetes.io/use-regex: "true"
 spec:
   tls:
     - hosts:
@@ -24,11 +25,12 @@ spec:
                 name: backend-service
                 port:
                   number: 8000
-          # Frontend
-          - path: /
-            pathType: Prefix
+          # Frontend React App (catch-all)
+          - path: /(.*)
+            pathType: ImplementationSpecific
             backend:
               service:
                 name: frontend-service
                 port:
                   number: 80
+

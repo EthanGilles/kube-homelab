@@ -5,7 +5,7 @@ metadata:
   namespace: jobwatch-dev
   labels:
     release: kube-prometheus-stack-prometheus
-    app: jobwatch
+    app: jobwatch-backend
 spec:
   selector:
     matchLabels:
@@ -14,6 +14,7 @@ spec:
     matchNames:
       - jobwatch-dev
   endpoints:
-    - port: http
+    - port: metrics
+      path: /metrics
       interval: 30s
       scheme: http

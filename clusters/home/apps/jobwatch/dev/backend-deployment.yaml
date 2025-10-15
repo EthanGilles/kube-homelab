@@ -30,11 +30,13 @@ kind: Service
 metadata:
   name: backend-service
   namespace: jobwatch-dev
+  labels:
+    app: jobwatch-backend
 spec:
   selector:
     app: jobwatch-backend
   ports:
-    - name: http
+    - name: metrics
       protocol: TCP
       port: 8000
       targetPort: 8000

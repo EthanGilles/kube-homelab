@@ -48,7 +48,7 @@ and up-to-date with barely any manual effort.
 
 ### Apps:
 - [Capacitor](https://github.com/gimlet-io/capacitor)
-- [JobWatch (An app I made)](https://github.com/EthanGilles/job-scraper)
+- [JobWatch (Personal app)](https://github.com/EthanGilles/job-scraper)
 
 ---
 

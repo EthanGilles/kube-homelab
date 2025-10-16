@@ -15,15 +15,38 @@ spec:
     spec:
       imagePullSecrets:
         - name: ghcr-pull-secret
+      # Grab timezone from node
+      volumes:
+        - name: localtime
+          hostPath:
+            path: /etc/localtime
+            type: File
+        - name: timezone
+          hostPath:
+            path: /etc/timezone
+            type: File
       containers:
         - name: backend
           image: ghcr.io/ethangilles/job-watch-backend:dev
           imagePullPolicy: Always
           ports:
             - containerPort: 8000
+          # Secrets for Gmail SMTP
           envFrom:
             - secretRef:
                 name: backend-secrets
+          # Mount time zone from host node
+          env:
+            - name: TZ
+              value: "America/Denver"
+          volumeMounts:
+            - name: localtime
+              mountPath: /etc/localtime
+              readOnly: true
+            - name: timezone
+              mountPath: /etc/timezone
+              readOnly: true
+          # Api exposes /health endpoint, might as well use it
           livenessProbe:
             httpGet:
               path: /health

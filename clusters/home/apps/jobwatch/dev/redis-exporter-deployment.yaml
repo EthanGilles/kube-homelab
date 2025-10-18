@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
         - name: redis-exporter
-          image: redisexporter/redis-exporter:v1.49.0
+          image: oliver006/redis-exporter:v1.36.0
           args:
             - "--redis.addr=redis://redis-service:6379"
           ports:

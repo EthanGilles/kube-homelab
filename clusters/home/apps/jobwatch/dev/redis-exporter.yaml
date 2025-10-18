@@ -20,6 +20,7 @@ spec:
         kind: HelmRepository
         name: prometheus-community
         namespace: flux-system
+  interval: 30m
   values:
     redis:
       addr: "redis://redis-service:6379"

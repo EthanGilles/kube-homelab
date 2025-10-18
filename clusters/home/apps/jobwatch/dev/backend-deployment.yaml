@@ -38,10 +38,13 @@ spec:
           envFrom:
             - secretRef:
                 name: backend-secrets
-          # Mount time zone from host node
           env:
             - name: TZ
               value: "America/Denver"
+            - name: REDIS_HOST
+              value: "redis-service"
+            - name: REDIS_PORT
+              value: "6379"
           volumeMounts:
             - name: localtime
               mountPath: /etc/localtime

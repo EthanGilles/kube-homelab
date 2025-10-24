@@ -23,9 +23,9 @@ spec:
             - containerPort: 80
           env:
             - name: API_URL
-              value: "https://api.jobwatch.homelab"
+              value: "https://jobwatch-api.ethan-fullstack.dev"
             - name: ENVIRONMENT
-              value: "development"
+              value: "production"
       hostAliases:
         - ip: "10.0.0.103"
           hostnames:

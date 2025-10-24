@@ -26,10 +26,6 @@ spec:
               value: "https://jobwatch-api.ethan-fullstack.dev"
             - name: ENVIRONMENT
               value: "production"
-      hostAliases:
-        - ip: "10.0.0.103"
-          hostnames:
-            - "api.jobwatch.homelab"
 ---
 apiVersion: v1
 kind: Service

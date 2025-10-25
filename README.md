@@ -48,7 +48,9 @@ and up-to-date with barely any manual effort.
 
 ### Apps:
 - [Capacitor](https://github.com/gimlet-io/capacitor)
-- [JobWatch (Personal app)](https://github.com/EthanGilles/job-scraper)
+- JobWatch (Personal app)
+    - [Self-hosted website (Using Cloudflare tunnel)](https://jobwatch.ethan-fullstack.dev/)
+    - [Source Code](https://github.com/EthanGilles/job-scraper)
 
 ---
 

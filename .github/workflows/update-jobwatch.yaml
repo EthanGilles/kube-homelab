@@ -1,0 +1,46 @@
+name: Bump Deployment Annotation on Update
+
+on:
+  repository_dispatch:
+    types: [update-jobwatch-deploy]
+
+jobs:
+  bump-annotation:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.FLUX_REPO_PAT }}
+
+      - name: Install yq
+        run: sudo apt-get install -y yq
+
+      - name: Determine target environment
+        id: env
+        run: |
+          if [[ "${{ github.event.client_payload.branch }}" == "main" ]]; then
+            echo "env=prod" >> $GITHUB_OUTPUT
+          else
+            echo "env=dev" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Bump annotation for correct environment
+        run: |
+          ts=$(date -u +"%Y%m%d%H%M%S")
+
+          BACKEND_PATH="clusters/home/apps/jobwatch/${{ steps.env.outputs.env }}/backend-deployment.yaml"
+          FRONTEND_PATH="clusters/home/apps/jobwatch/${{ steps.env.outputs.env }}/frontend-deployment.yaml"
+          REDIS_PATH="clusters/home/apps/jobwatch/${{ steps.env.outputs.env }}/redis-deployment.yaml"
+
+          # Update annotation
+          yq -i '.spec.template.metadata.annotations."flux-update" = env(ts)' "$BACKEND_PATH"
+          yq -i '.spec.template.metadata.annotations."flux-update" = env(ts)' "$FRONTEND_PATH"
+          yq -i '.spec.template.metadata.annotations."flux-update" = env(ts)' "$REDIS_PATH"
+
+      - name: Commit and push changes
+        run: |
+          git config user.name "github-actions"
+          git config user.email "actions@github.com"
+          git commit -am "Update ${{ steps.env.outputs.env }} deployment ($ts)" || echo "No changes"
+          git push

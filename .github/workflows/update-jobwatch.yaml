@@ -33,10 +33,10 @@ jobs:
           BACKEND_PATH="clusters/home/apps/jobwatch/${{ steps.env.outputs.env }}/backend-deployment.yaml"
           FRONTEND_PATH="clusters/home/apps/jobwatch/${{ steps.env.outputs.env }}/frontend-deployment.yaml"
           REDIS_PATH="clusters/home/apps/jobwatch/${{ steps.env.outputs.env }}/redis-deployment.yaml"
-
-          yq eval -i ".spec.template.metadata.labels.\"last-update\" = \"$ts\"" "$BACKEND_PATH"
-          yq eval -i ".spec.template.metadata.labels.\"last-update\" = \"$ts\"" "$FRONTEND_PATH"
-          yq eval -i ".spec.template.metadata.labels.\"last-update\" = \"$ts\"" "$REDIS_PATH"
+          
+          for file in "$BACKEND_PATH" "$FRONTEND_PATH" "$REDIS_PATH"; do
+            sed -i "s/last-update: .*/last-update: \"$ts\"/" "$file"
+          done
 
       - name: Commit and push changes
         run: |

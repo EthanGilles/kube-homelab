@@ -12,7 +12,7 @@ spec:
     metadata:
       labels:
         app: jobwatch-redis
-        last-update: "20251027193745"
+        last-update: "20251027195310"
     spec:
       containers:
         - name: redis

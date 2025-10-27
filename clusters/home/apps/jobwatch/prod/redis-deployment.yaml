@@ -12,6 +12,7 @@ spec:
     metadata:
       labels:
         app: jobwatch-redis
+        last-update: "initial"
     spec:
       containers:
         - name: redis

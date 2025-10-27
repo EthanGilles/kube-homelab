@@ -34,12 +34,9 @@ jobs:
           FRONTEND_PATH="clusters/home/apps/jobwatch/${{ steps.env.outputs.env }}/frontend-deployment.yaml"
           REDIS_PATH="clusters/home/apps/jobwatch/${{ steps.env.outputs.env }}/redis-deployment.yaml"
 
-          yq -i eval '.spec.template.metadata.annotations |= . // {}' "$BACKEND_PATH"
-          yq -i eval '.spec.template.metadata.annotations |= . // {}' "$FRONTEND_PATH"
-          yq -i eval '.spec.template.metadata.annotations |= . // {}' "$REDIS_PATH"
-          yq -i eval ".spec.template.metadata.annotations.\"flux-update\" = \"$ts\"" "$BACKEND_PATH"
-          yq -i eval ".spec.template.metadata.annotations.\"flux-update\" = \"$ts\"" "$FRONTEND_PATH"
-          yq -i eval ".spec.template.metadata.annotations.\"flux-update\" = \"$ts\"" "$REDIS_PATH"
+          yq eval -i ".spec.template.metadata.labels.\"last-update\" = \"$ts\"" "$BACKEND_PATH"
+          yq eval -i ".spec.template.metadata.labels.\"last-update\" = \"$ts\"" "$FRONTEND_PATH"
+          yq eval -i ".spec.template.metadata.labels.\"last-update\" = \"$ts\"" "$REDIS_PATH"
 
       - name: Commit and push changes
         run: |

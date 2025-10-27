@@ -12,6 +12,7 @@ spec:
     metadata:
       labels:
         app: jobwatch-frontend
+        last-update: "initial"
     spec:
       imagePullSecrets:
         - name: ghcr-pull-secret

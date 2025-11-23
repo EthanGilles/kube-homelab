@@ -12,7 +12,7 @@ spec:
     metadata:
       labels:
         app: jobwatch-frontend
-        version: "v0.9.22"
+        version: "v0.9.23"
     spec:
       imagePullSecrets:
         - name: ghcr-pull-secret

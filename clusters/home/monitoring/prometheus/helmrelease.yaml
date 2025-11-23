@@ -1,82 +1,82 @@
-# apiVersion: helm.toolkit.fluxcd.io/v2
-# kind: HelmRelease
-# metadata:
-#   name: kube-prometheus-stack
-#   namespace: monitoring
-# spec:
-#   releaseName: kube-prometheus-stack
-#   interval: 1h
-#   chart:
-#     spec:
-#       chart: kube-prometheus-stack
-#       version: 78.2.1
-#       sourceRef:
-#         kind: HelmRepository
-#         name: prometheus-community
-#         namespace: flux-system
-#   valuesFrom:
-#   - kind: ConfigMap
-#     name: flux-kube-state-metrics-config
-#     valuesKey: kube-state-metrics-config.yaml
-#   values:
-#     prometheus:
-#       prometheusSpec:
-#         storageSpec:
-#           volumeClaimTemplate:
-#             spec:
-#               storageClassName: longhorn
-#               accessModes: ["ReadWriteMany"]
-#               resources:
-#                 requests:
-#                   storage: 15Gi
-#       ingress:
-#         enabled: true
-#         annotations:
-#           kubernetes.io/ingress.class: nginx
-#           cert-manager.io/cluster-issuer: homelab-ca-issuer
-#         hosts:
-#           - prometheus.homelab
-#         tls:
-#           - hosts:
-#               - prometheus.homelab
-#             secretName: prometheus-tls
-#
-#     alertmanager:
-#       alertmanagerSpec:
-#         storage:
-#           volumeClaimTemplate:
-#             spec:
-#               storageClassName: longhorn
-#               accessModes: ["ReadWriteMany"]
-#               resources:
-#                 requests:
-#                   storage: 2Gi
-#       ingress:
-#         enabled: true
-#         annotations:
-#           kubernetes.io/ingress.class: nginx
-#           cert-manager.io/cluster-issuer: homelab-ca-issuer
-#         hosts:
-#           - alertmanager.homelab
-#         tls:
-#           - hosts:
-#               - alertmanager.homelab
-#             secretName: alertmanager-tls
-#
-#     grafana:
-#       persistence:
-#         enabled: true
-#         accessModes: ["ReadWriteMany"]
-#         storageClassName: longhorn
-#         size: 5Gi
-#       ingress:
-#         enabled: true
-#         annotations:
-#           kubernetes.io/ingress.class: nginx
-#           cert-manager.io/cluster-issuer: homelab-ca-issuer
-#         hosts:
-#           - grafana.homelab
-#         tls:
-#           - hosts:
-#               - grafana.homelab
-#             secretName: grafana-tls
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: kube-prometheus-stack
+  namespace: monitoring
+spec:
+  releaseName: kube-prometheus-stack
+  interval: 1h
+  chart:
+    spec:
+      chart: kube-prometheus-stack
+      version: 78.2.1
+      sourceRef:
+        kind: HelmRepository
+        name: prometheus-community
+        namespace: flux-system
+  valuesFrom:
+  - kind: ConfigMap
+    name: flux-kube-state-metrics-config
+    valuesKey: kube-state-metrics-config.yaml
+  values:
+    prometheus:
+      prometheusSpec:
+        storageSpec:
+          volumeClaimTemplate:
+            spec:
+              storageClassName: longhorn
+              accessModes: ["ReadWriteMany"]
+              resources:
+                requests:
+                  storage: 15Gi
+      ingress:
+        enabled: true
+        annotations:
+          kubernetes.io/ingress.class: nginx
+          cert-manager.io/cluster-issuer: homelab-ca-issuer
+        hosts:
+          - prometheus.homelab
+        tls:
+          - hosts:
+              - prometheus.homelab
+            secretName: prometheus-tls
+
+    alertmanager:
+      alertmanagerSpec:
+        storage:
+          volumeClaimTemplate:
+            spec:
+              storageClassName: longhorn
+              accessModes: ["ReadWriteMany"]
+              resources:
+                requests:
+                  storage: 2Gi
+      ingress:
+        enabled: true
+        annotations:
+          kubernetes.io/ingress.class: nginx
+          cert-manager.io/cluster-issuer: homelab-ca-issuer
+        hosts:
+          - alertmanager.homelab
+        tls:
+          - hosts:
+              - alertmanager.homelab
+            secretName: alertmanager-tls
+
+    grafana:
+      persistence:
+        enabled: true
+        accessModes: ["ReadWriteMany"]
+        storageClassName: longhorn
+        size: 5Gi
+      ingress:
+        enabled: true
+        annotations:
+          kubernetes.io/ingress.class: nginx
+          cert-manager.io/cluster-issuer: homelab-ca-issuer
+        hosts:
+          - grafana.homelab
+        tls:
+          - hosts:
+              - grafana.homelab
+            secretName: grafana-tls

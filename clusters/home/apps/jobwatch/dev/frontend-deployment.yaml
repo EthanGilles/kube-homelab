@@ -1,47 +1,47 @@
-# apiVersion: apps/v1
-# kind: Deployment
-# metadata:
-#   name: jobwatch-frontend
-#   namespace: jobwatch-dev
-# spec:
-#   replicas: 1
-#   selector:
-#     matchLabels:
-#       app: jobwatch-frontend
-#   template:
-#     metadata:
-#       labels:
-#         app: jobwatch-frontend
-#         version: "v0.9.22"
-#     spec:
-#       imagePullSecrets:
-#         - name: ghcr-pull-secret
-#       containers:
-#         - name: frontend
-#           image: ghcr.io/ethangilles/job-watch-frontend:dev
-#           imagePullPolicy: Always
-#           ports:
-#             - containerPort: 80
-#           env:
-#             - name: API_URL
-#               value: "https://api.jobwatch.dev.homelab"
-#             - name: ENVIRONMENT
-#               value: "development"
-#       hostAliases:
-#         - ip: "10.0.0.103"
-#           hostnames:
-#             - "api.jobwatch.dev.homelab"
-# ---
-# apiVersion: v1
-# kind: Service
-# metadata:
-#   name: frontend-service
-#   namespace: jobwatch-dev
-# spec:
-#   selector:
-#     app: jobwatch-frontend
-#   ports:
-#     - protocol: TCP
-#       port: 80
-#       targetPort: 80
-#   type: ClusterIP
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: jobwatch-frontend
+  namespace: jobwatch-dev
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: jobwatch-frontend
+  template:
+    metadata:
+      labels:
+        app: jobwatch-frontend
+        version: "v0.9.22"
+    spec:
+      imagePullSecrets:
+        - name: ghcr-pull-secret
+      containers:
+        - name: frontend
+          image: ghcr.io/ethangilles/job-watch-frontend:dev
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 80
+          env:
+            - name: API_URL
+              value: "https://api.jobwatch.dev.homelab"
+            - name: ENVIRONMENT
+              value: "development"
+      hostAliases:
+        - ip: "10.0.0.103"
+          hostnames:
+            - "api.jobwatch.dev.homelab"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: frontend-service
+  namespace: jobwatch-dev
+spec:
+  selector:
+    app: jobwatch-frontend
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80
+  type: ClusterIP

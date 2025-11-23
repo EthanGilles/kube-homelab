@@ -31,13 +31,13 @@ spec:
           secretName: wildcard-homelab-tls
       pathType: Prefix
 
-    # metrics:
-    #   serviceMonitor:
-    #     enabled: true
-    #     additionalLabels:
-    #       release: kube-prometheus-stack
-    #     annotations: {}
-    #     interval: "30s"
-    #     scrapeTimeout: ""
-    #     relabelings: []
-    #     metricRelabelings: []
+    metrics:
+      serviceMonitor:
+        enabled: true
+        additionalLabels:
+          release: kube-prometheus-stack
+        annotations: {}
+        interval: "30s"
+        scrapeTimeout: ""
+        relabelings: []
+        metricRelabelings: []

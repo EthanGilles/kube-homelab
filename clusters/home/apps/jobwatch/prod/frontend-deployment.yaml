@@ -1,43 +1,43 @@
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: jobwatch-frontend
-  namespace: jobwatch-prod
-spec:
-  replicas: 1
-  selector:
-    matchLabels:
-      app: jobwatch-frontend
-  template:
-    metadata:
-      labels:
-        app: jobwatch-frontend
-        last-update: "initial"
-    spec:
-      imagePullSecrets:
-        - name: ghcr-pull-secret
-      containers:
-        - name: frontend
-          image: ghcr.io/ethangilles/job-watch-frontend:main
-          imagePullPolicy: Always
-          ports:
-            - containerPort: 80
-          env:
-            - name: API_URL
-              value: "https://jobwatch-api.ethan-fullstack.dev"
-            - name: ENVIRONMENT
-              value: "production"
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: frontend-service
-  namespace: jobwatch-prod
-spec:
-  selector:
-    app: jobwatch-frontend
-  ports:
-    - protocol: TCP
-      port: 80
-      targetPort: 80
-  type: ClusterIP
+# apiVersion: apps/v1
+# kind: Deployment
+# metadata:
+#   name: jobwatch-frontend
+#   namespace: jobwatch-prod
+# spec:
+#   replicas: 1
+#   selector:
+#     matchLabels:
+#       app: jobwatch-frontend
+#   template:
+#     metadata:
+#       labels:
+#         app: jobwatch-frontend
+#         last-update: "initial"
+#     spec:
+#       imagePullSecrets:
+#         - name: ghcr-pull-secret
+#       containers:
+#         - name: frontend
+#           image: ghcr.io/ethangilles/job-watch-frontend:main
+#           imagePullPolicy: Always
+#           ports:
+#             - containerPort: 80
+#           env:
+#             - name: API_URL
+#               value: "https://jobwatch-api.ethan-fullstack.dev"
+#             - name: ENVIRONMENT
+#               value: "production"
+# ---
+# apiVersion: v1
+# kind: Service
+# metadata:
+#   name: frontend-service
+#   namespace: jobwatch-prod
+# spec:
+#   selector:
+#     app: jobwatch-frontend
+#   ports:
+#     - protocol: TCP
+#       port: 80
+#       targetPort: 80
+#   type: ClusterIP

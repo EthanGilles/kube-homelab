@@ -1,21 +1,21 @@
-apiVersion: monitoring.coreos.com/v1
-kind: ServiceMonitor
-metadata:
-  name: jobwatch-backend
-  namespace: jobwatch-prod
-  labels:
-    release: kube-prometheus-stack
-    app: jobwatch-backend
-spec:
-  selector:
-    matchLabels:
-      app: jobwatch-backend
-  namespaceSelector:
-    matchNames:
-      - jobwatch-prod
-  endpoints:
-    - port: metrics
-      path: /metrics
-      interval: 30s
-      scheme: http
-
+# apiVersion: monitoring.coreos.com/v1
+# kind: ServiceMonitor
+# metadata:
+#   name: jobwatch-backend
+#   namespace: jobwatch-prod
+#   labels:
+#     release: kube-prometheus-stack
+#     app: jobwatch-backend
+# spec:
+#   selector:
+#     matchLabels:
+#       app: jobwatch-backend
+#   namespaceSelector:
+#     matchNames:
+#       - jobwatch-prod
+#   endpoints:
+#     - port: metrics
+#       path: /metrics
+#       interval: 30s
+#       scheme: http
+#

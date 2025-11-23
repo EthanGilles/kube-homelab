@@ -1,104 +1,104 @@
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: jobwatch-backend
-  namespace: jobwatch-prod
-spec:
-  replicas: 1
-  selector:
-    matchLabels:
-      app: jobwatch-backend
-  template:
-    metadata:
-      labels:
-        app: jobwatch-backend
-        last-update: "initial"
-    spec:
-      imagePullSecrets:
-        - name: ghcr-pull-secret
-      # Grab timezone from node
-      volumes:
-        - name: localtime
-          hostPath:
-            path: /etc/localtime
-            type: File
-        - name: timezone
-          hostPath:
-            path: /etc/timezone
-            type: File
-        - name: app-data
-          persistentVolumeClaim:
-            claimName: jobwatch-pvc
-      containers:
-        - name: backend
-          image: ghcr.io/ethangilles/job-watch-backend:main
-          imagePullPolicy: Always
-          ports:
-            - containerPort: 8000
-          # Secrets for Gmail SMTP
-          envFrom:
-            - secretRef:
-                name: backend-secrets
-          env:
-            - name: TZ
-              value: "America/Denver"
-            - name: REDIS_HOST
-              value: "redis-service"
-            - name: REDIS_PORT
-              value: "6379"
-          volumeMounts:
-            - name: localtime
-              mountPath: /etc/localtime
-              readOnly: true
-            - name: timezone
-              mountPath: /etc/timezone
-              readOnly: true
-            - name: app-data
-              mountPath: /app/data
-          # Api exposes /health endpoint, might as well use it
-          livenessProbe:
-            httpGet:
-              path: /health
-              port: 8000
-            initialDelaySeconds: 15
-            periodSeconds: 30
-            timeoutSeconds: 5
-            failureThreshold: 3
-          readinessProbe:
-            httpGet:
-              path: /health
-              port: 8000
-            initialDelaySeconds: 5
-            periodSeconds: 10
-            timeoutSeconds: 3
-            failureThreshold: 3
----
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  name: jobwatch-pvc
-  namespace: jobwatch-prod
-spec:
-  accessModes:
-    - ReadWriteOnce
-  resources:
-    requests:
-      storage: 1Gi
-  storageClassName: longhorn
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: backend-service
-  namespace: jobwatch-prod
-  labels:
-    app: jobwatch-backend
-spec:
-  selector:
-    app: jobwatch-backend
-  ports:
-    - name: metrics
-      protocol: TCP
-      port: 8000
-      targetPort: 8000
-  type: ClusterIP
+# apiVersion: apps/v1
+# kind: Deployment
+# metadata:
+#   name: jobwatch-backend
+#   namespace: jobwatch-prod
+# spec:
+#   replicas: 1
+#   selector:
+#     matchLabels:
+#       app: jobwatch-backend
+#   template:
+#     metadata:
+#       labels:
+#         app: jobwatch-backend
+#         last-update: "initial"
+#     spec:
+#       imagePullSecrets:
+#         - name: ghcr-pull-secret
+#       # Grab timezone from node
+#       volumes:
+#         - name: localtime
+#           hostPath:
+#             path: /etc/localtime
+#             type: File
+#         - name: timezone
+#           hostPath:
+#             path: /etc/timezone
+#             type: File
+#         - name: app-data
+#           persistentVolumeClaim:
+#             claimName: jobwatch-pvc
+#       containers:
+#         - name: backend
+#           image: ghcr.io/ethangilles/job-watch-backend:main
+#           imagePullPolicy: Always
+#           ports:
+#             - containerPort: 8000
+#           # Secrets for Gmail SMTP
+#           envFrom:
+#             - secretRef:
+#                 name: backend-secrets
+#           env:
+#             - name: TZ
+#               value: "America/Denver"
+#             - name: REDIS_HOST
+#               value: "redis-service"
+#             - name: REDIS_PORT
+#               value: "6379"
+#           volumeMounts:
+#             - name: localtime
+#               mountPath: /etc/localtime
+#               readOnly: true
+#             - name: timezone
+#               mountPath: /etc/timezone
+#               readOnly: true
+#             - name: app-data
+#               mountPath: /app/data
+#           # Api exposes /health endpoint, might as well use it
+#           livenessProbe:
+#             httpGet:
+#               path: /health
+#               port: 8000
+#             initialDelaySeconds: 15
+#             periodSeconds: 30
+#             timeoutSeconds: 5
+#             failureThreshold: 3
+#           readinessProbe:
+#             httpGet:
+#               path: /health
+#               port: 8000
+#             initialDelaySeconds: 5
+#             periodSeconds: 10
+#             timeoutSeconds: 3
+#             failureThreshold: 3
+# ---
+# apiVersion: v1
+# kind: PersistentVolumeClaim
+# metadata:
+#   name: jobwatch-pvc
+#   namespace: jobwatch-prod
+# spec:
+#   accessModes:
+#     - ReadWriteOnce
+#   resources:
+#     requests:
+#       storage: 1Gi
+#   storageClassName: longhorn
+# ---
+# apiVersion: v1
+# kind: Service
+# metadata:
+#   name: backend-service
+#   namespace: jobwatch-prod
+#   labels:
+#     app: jobwatch-backend
+# spec:
+#   selector:
+#     app: jobwatch-backend
+#   ports:
+#     - name: metrics
+#       protocol: TCP
+#       port: 8000
+#       targetPort: 8000
+#   type: ClusterIP
